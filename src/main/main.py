@@ -4,9 +4,15 @@
     # verificar se tem poroduto cadastrado, caso nao tenha bloquear compra
     # fazer fluxo de compra -> array do carrinho
     # testes
-        # caso der tempo: exclusao e edicao de clientes e produtos (CRUD COMPLETO)
-        # permitir pagamento internacional (conversao de moedas)
-        # possibilidade de gerar qr code com alguma lib python (para pagamento PIX)    
+        # caso der tempo (feat):
+            # validacao de CNPJ caso cliente selecione CNPJ + cadastro de cliente CNPJ
+            # cupons de desconto e/ou desconto de produtos (flag se produto esta em desconto + procentaem de desconto -> fazer calculo em pagamento)
+            # vencimento de produto -> impedir venda + dar desconto
+            # exclusao e edicao de clientes e produtos (CRUD COMPLETO)
+            # permitir pagamento internacional (conversao de moedas)
+            # possibilidade de gerar qr code com alguma lib python (para pagamento PIX)    
+            # codigo de barras -> identificacao do produto pelo codigo de barras dele (digitado)
+            # simulacao de pesagem de produto
     
 if __package__:
     from ..cliente import cadastrar_clientes
