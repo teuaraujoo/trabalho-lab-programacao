@@ -6,16 +6,11 @@
 
 from datetime import datetime
 import uuid
+from empresa import empresa
 
-def gerarNotaFiscal(nome, telefone, cpf, preco, descricao, cnpj, nomeEmpresa, telefoneEmpresa):
+def gerarNotaFiscal(nome, telefone, cpf, preco, descricao):
     data = datetime.now()
     identificador = str(uuid.uuid4())
-    
-    dadosEmpresa = {
-        "nome": nomeEmpresa,
-        "cnpj": cnpj,
-        "telefone": telefoneEmpresa
-    }
 
     dadosCliente = {
         "nome": nome,
@@ -30,7 +25,7 @@ def gerarNotaFiscal(nome, telefone, cpf, preco, descricao, cnpj, nomeEmpresa, te
         "descricao": descricao,
     }
 
-    return printarNotaFiscal(dadosEmpresa, dadosCliente, dadosCompra)
+    return printarNotaFiscal(empresa, dadosCliente, dadosCompra)
 
 
 def printarNotaFiscal(dadosEmpresa, dadosCliente, dadosCompra):
@@ -39,9 +34,9 @@ def printarNotaFiscal(dadosEmpresa, dadosCliente, dadosCompra):
         print("======================================")
         print("EMPRESA") 
         print()
-        print("Nome: ", dadosEmpresa["nome"]) 
-        print("CNPJ: ", dadosEmpresa["cnpj"]) 
-        print("Telefone: ", dadosEmpresa["telefone"]) 
+        print("Nome: ", dadosEmpresa["Nome"]) 
+        print("CNPJ: ", dadosEmpresa["CNPJ"]) 
+        print("Telefone: ", dadosEmpresa["Telefone"]) 
         print("--------------------------------------")
         print("CLIENTE") 
         print()
