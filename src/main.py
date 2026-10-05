@@ -14,16 +14,33 @@
             # codigo de barras -> identificacao do produto pelo codigo de barras dele (digitado)
             # simulacao de pesagem de produto
     
-if __package__:
-    from ..cliente import cadastrar_clientes
-    from ..produto import cadastrar_produtos, listar_produtos
-else:
-    import sys
-    from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from cliente import cadastrar_clientes
-    from produto import cadastrar_produtos, listar_produtos
+import sys
+from pathlib import Path
 
+# Garante que os módulos de src/ se importem entre si (python src/main.py ou python -m src.main)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from carrinho import selecionar_produtos, finalizar_carrinho, mostrar_carrinho, carrinho
+from cliente import cadastrar_clientes
+from produto import cadastrar_produtos, listar_produtos, produtos
+
+def escolher_produto():
+    if len(produtos) == 0:
+        print("Nenhum produto cadastrado! Compra bloqueada.")
+        return
+    selecionar_produtos()
+    if len(carrinho) > 0:
+        mostrar_carrinho()
+
+def pagar_carrinho():
+    resultado = finalizar_carrinho()
+    if resultado["sucesso"]:
+        print(f"\n{resultado['mensagem']}")
+        print(f"Total pago: R$ {resultado['total']:.2f} ({resultado['metodo']})")
+        if "comprovante" in resultado:
+            print(f"Comprovante PIX: {resultado['comprovante']}")
+    else:
+        print(f"\nPagamento não realizado: {resultado['mensagem']}")
 
 def menu_cliente():
     while True:
@@ -33,14 +50,13 @@ def menu_cliente():
         if escolha == "1":
             listar_produtos()
         elif escolha == "2":
-            print("A escolha de produtos ainda será implementada.")
+            escolher_produto()
         elif escolha == "3":
-            print("O pagamento ainda será implementado.")
+            pagar_carrinho()
         elif escolha == "4":
             return
         else:
             print("Opção inválida!")
-
 
 def menu_administrador():
     while True:
@@ -55,7 +71,6 @@ def menu_administrador():
             return
         else:
             print("Opção inválida!")
-
 
 def menu():
     while True:

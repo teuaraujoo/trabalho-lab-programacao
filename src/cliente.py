@@ -146,4 +146,19 @@ def cadastrar_clientes():
 
     clientes.append(cliente)
     print("Cliente cadastrado com sucesso! ", clientes)
-    return
+    return cliente
+
+
+def identificar_cliente():
+    cpf = input("CPF do cliente: ")
+    while not validar_cpf(cpf):
+        print("CPF inválido!")
+        cpf = input("CPF do cliente: ")
+    cpf = cpf.replace(".", "").replace("-", "").strip()
+
+    for cliente in clientes:
+        if cliente["cpf"] == cpf:
+            return cliente
+
+    print("Cliente não cadastrado. Vamos cadastrar agora.")
+    return cadastrar_clientes()

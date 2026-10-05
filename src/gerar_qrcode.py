@@ -17,9 +17,9 @@ def gerarQrCodePixCobranca(cliente, dados):
     
     img.save(arquivo)
     
-    print(f"QR Code do comprovante gerado em: {arquivo}")
+    print(f"QR Code da cobrança gerado em: {arquivo}")
     
-    return True
+    return arquivo
 
 # dados -> chave pix da empresa, chave pix do cliente, valor, descricao, status
 
@@ -36,4 +36,4 @@ def gerarQrCodeComprovante(cliente, dados):
     
     print(f"QR Code do comprovante gerado em: {arquivo}")
     
-    return True
+    return arquivo

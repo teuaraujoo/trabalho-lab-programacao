@@ -6,14 +6,12 @@
 
 
 from produto import produtos
-from src.pagamento import Metodos, ler_numero, calcular_total, ler_pagamento
-
-
-
+from cliente import identificar_cliente
+from empresa import empresa
+from gerar_qrcode import gerarQrCodePixCobranca, gerarQrCodeComprovante
+from pagamento import Metodos, ler_numero, calcular_total, ler_pagamento
 
 carrinho = []
-
-
 
 def adicionar_ao_carrinho(produto, quantidade):
     for item in carrinho:
@@ -72,6 +70,46 @@ def selecionar_produtos():
         print(f"{quantidade}x {produto['nome']} adicionado!")
 
 
+def descricao_da_compra():
+    return ", ".join(f"{item['quantidade']}x {item['nome']}" for item in carrinho)
+
+
+def montar_dados_pix(total, descricao, status, cliente=None):
+    dados = (
+        f"chave_pix_empresa={empresa['Chave PIX']};"
+        f"valor={total:.2f};descricao={descricao};status={status}"
+    )
+    if cliente is not None:
+        dados += f";chave_pix_cliente={cliente['cpf']};cliente={cliente['nome']}"
+    return dados
+
+
+def pagar_pix(total):
+    cliente = identificar_cliente()
+    if cliente is None:
+        return {"sucesso": False, "mensagem": "Cliente não identificado."}
+
+    descricao = descricao_da_compra()
+    cobranca = gerarQrCodePixCobranca(
+        cliente, montar_dados_pix(total, descricao, "PENDENTE")
+    )
+
+    confirmacao = input("Pagamento realizado? (s/n): ").strip().lower()
+    if confirmacao != "s":
+        return {"sucesso": False, "mensagem": "Pagamento PIX não confirmado.", "cobranca": str(cobranca)}
+
+    comprovante = gerarQrCodeComprovante(
+        cliente, montar_dados_pix(total, descricao, "PAGO", cliente)
+    )
+    return {
+        "sucesso": True,
+        "mensagem": "Pagamento aprovado via pix.",
+        "cliente": cliente,
+        "cobranca": str(cobranca),
+        "comprovante": str(comprovante),
+    }
+
+
 def pagar(total, metodo):
     """Recebe as infos do pagamento e retorna sucesso ou erro."""
     if metodo == Metodos.Dinheiro:
@@ -83,7 +121,9 @@ def pagar(total, metodo):
         troco = recebido - total
         return {"sucesso": True, "mensagem": f"Pago em dinheiro. Troco: R$ {troco:.2f}"}
 
-    
+    if metodo == Metodos.Pix:
+        return pagar_pix(total)
+
     return {"sucesso": True, "mensagem": f"Pagamento aprovado via {metodo.value}."}
 
 
