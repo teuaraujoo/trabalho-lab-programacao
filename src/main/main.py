@@ -16,13 +16,13 @@
     
 if __package__:
     from ..cliente import cadastrar_clientes
-    from ..produto import cadastrar_produto, listar_produtos
+    from ..produto import cadastrar_produtos, listar_produtos
 else:
     import sys
     from pathlib import Path
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     from cliente import cadastrar_clientes
-    from produto import cadastrar_produto, listar_produtos
+    from produto import cadastrar_produtos, listar_produtos
 
 
 def menu_cliente():
@@ -48,9 +48,9 @@ def menu_administrador():
         print("1 - Cadastrar cliente\n2 - Cadastrar produto\n3 - Voltar")
         escolha = input("Escolha uma opção: ").strip()
         if escolha == "1":
-            cadastrar_clientes()
+          cadastrar_clientes()
         elif escolha == "2":
-            cadastrar_produto()
+            cadastrar_produtos()
         elif escolha == "3":
             return
         else:

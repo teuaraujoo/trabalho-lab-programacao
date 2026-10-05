@@ -108,7 +108,7 @@ def calcular_segundo_digito(cpf):
     else:
         return 11 - resto
         
-def cadastrar_clientes(cpf, nome, telefone):
+def cadastrar_clientes():
 # verificar se ja exsite cliente no arrayu
 # se exister retorna o encontrado
 # se nao exister cadastra o novo cliente e retorna o novo cliente cadastrado

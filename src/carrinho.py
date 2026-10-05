@@ -67,7 +67,7 @@ def selecionar_produtos():
             print("Quantidade inválida!")
             continue
 
-        produto = produtos[escolha - 1]
+        produto = produtos[int(escolha) - 1]
         adicionar_ao_carrinho(produto, quantidade)
         print(f"{quantidade}x {produto['nome']} adicionado!")
 
