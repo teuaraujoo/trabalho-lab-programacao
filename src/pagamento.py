@@ -64,29 +64,3 @@ def ler_pagamento():
         print("Método de pagamento inválido, tente novamente.")
 
 
-def main():
-    produtos = []
-
-    quantidade_produtos = ler_numero(
-        "Quantos produtos deseja cadastrar? ", int
-    )
-
-    for _ in range(quantidade_produtos):
-        nome = input("Nome do produto: ")
-        quantidade = ler_numero("Quantidade do produto: ", int)
-        preco = ler_numero("Preço do produto: R$ ", float)
-
-        produtos.append((nome, quantidade, preco))
-
-    total = calcular_total(produtos)
-
-    print(f"\nTotal da compra: R$ {total:.2f}")
-
-    pagamento = ler_pagamento()
-
-    print(f"Pagamento escolhido: {pagamento.value}")
-    print("Pagamento válido!")
-
-
-if __name__ == "__main__":
-    main()

@@ -38,7 +38,10 @@ def limpar_nome(nome):
 def validar_telefone(telefone):
     telefone = limpar_telefone(telefone)
 
-    if len(telefone) != 10 and len(telefone) !=11:
+    if len(telefone) == 11:
+        return True
+
+    if len(telefone) < 11 or len(telefone) > 11 :
         return False
 
     if telefone[0] == "0":

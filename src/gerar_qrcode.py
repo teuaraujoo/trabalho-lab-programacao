@@ -9,7 +9,7 @@ import qrcode
 def gerarQrCodePixCobranca(cliente, dados):
     identificador = str(uuid.uuid1())
     
-    pasta = Path("arquivos/qrcodes/cobrancas") / f"{cliente["nome"]}"
+    pasta = Path("arquivos/qrcodes/cobrancas") / cliente["nome"]
     pasta.mkdir(parents=True, exist_ok=True)
     arquivo = pasta / f"pagamento_{identificador}.png"
     
@@ -26,7 +26,7 @@ def gerarQrCodePixCobranca(cliente, dados):
 def gerarQrCodeComprovante(cliente, dados):
     identificador = str(uuid.uuid1())
     
-    pasta = Path("arquivos/qrcodes/comprovantes") / f"{cliente["nome"]}"
+    pasta = Path("arquivos/qrcodes/comprovantes") / cliente["nome"]
     pasta.mkdir(parents=True, exist_ok=True)
     arquivo = pasta / f"pagamento_{identificador}.png"
     
